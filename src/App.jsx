@@ -6,6 +6,9 @@ const App = () => {
             <header className='app_header_sec'>
                 <h1>React App</h1>
             </header>
+            <p>
+                This is a simple React app.
+            </p>
         </div>
     );
 }
