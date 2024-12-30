@@ -5,7 +5,7 @@ import TaskFormInput from "../component/TaskFormInput.jsx";
 const App = () => {
     return (
         <div className='app'>
-            <TaskFormInput></TaskFormInput>
+            <TaskFormInput/>
             <main className={"app_main_sec"}>
                 <section className={"task_column_part"}>
                     section 1 - Backlog
