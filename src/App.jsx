@@ -1,27 +1,17 @@
 import React from 'react';
-import './App.css';
+
+import Header from "../component/Header.jsx";
+import TODOHero from "../component/TODOHero.jsx";
+import Form from "../component/Form.jsx";
+import TODoList from "../component/TODoList.jsx";
 
 const App = () => {
     return (
-        <div className='app'>
-            <main className={"app_main_sec"}>
-                <section className={"task_column_part"}>
-                    section 1 - Backlog
-                </section>
-                <section className={"task_column_part"}>
-                    section 2 - In Progress
-                </section>
-                <section className={"task_column_part"}>
-                    section 3 - Late Task
-                </section>
-                <section className={"task_column_part"}>
-                    section 4 - Done
-                </section>
-                <section className={"task_column_part"}>
-                    section 5 - Archive
-                </section>
-            </main>
-
+        <div className={"wrapper"}>
+            <Header/>
+            <TODOHero todos_completed={0} todos_total={0}/>
+            <Form/>
+            <TODoList todos={[]}/>
         </div>
     );
 }

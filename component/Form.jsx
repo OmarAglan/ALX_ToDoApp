@@ -1,3 +1,4 @@
+import '../src/App.css';
 function Form(){
   const handleSubmit = (event) =>{
     event.preventDefault()
@@ -11,11 +12,11 @@ function Form(){
           type={"text"}
           name={"todo"}
           id={"todo"}
-          placeholder={"Please Add You Tasks For Today"}
+          placeholder={"Please Add Your Tasks For Today"}
         />
       </label>
       <button>
-        <span className={"hidden-s"}>Submit</span>
+        <span className={"visually-hidden"}>Submit</span>
         <svg>
           <path d={""}/>
         </svg>
@@ -24,3 +25,4 @@ function Form(){
 
   )
 }
+export default Form;

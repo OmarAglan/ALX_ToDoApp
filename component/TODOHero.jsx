@@ -1,3 +1,4 @@
+import '../src/App.css';
 function TODOHero({todos_completed, todos_total}){
   return(
     <section>
