@@ -1,16 +1,15 @@
-import '../src/App.css';
-function TODOHero({todos_completed, todos_total}){
-  return(
-    <section>
+function TODOHero({ todos_completed, todos_total }) {
+  return (
+    <section className="todohero_section">
       <div>
-        <p>Tasks That Has Been Completed.</p>
-        <p>Good Work, Keep It Up!</p>
+        <p className="text_large">Task Done</p>
+        <p className="text_small">keep it up</p>
       </div>
       <div>
-        {todos_completed/{todos_total}}
+        {todos_completed}/{todos_total}
       </div>
     </section>
-  )
+  );
 }
 
 export default TODOHero;
