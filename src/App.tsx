@@ -1,3 +1,15 @@
+/**
+ * @fileoverview Main application component that handles theme management, user initialization,
+ * and global application layout.
+ * 
+ * This component is responsible for:
+ * - Theme management (dark/light mode)
+ * - User context initialization and updates
+ * - Global error boundary
+ * - Global styles and layout
+ * - Routing setup
+ */
+
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
 import { DataObjectRounded, DeleteForeverRounded } from "@mui/icons-material";
 import { ThemeProvider as MuiThemeProvider, type Theme } from "@mui/material";
@@ -13,12 +25,24 @@ import { GlobalStyles } from "./styles";
 import { Themes, createCustomTheme, isDarkMode } from "./theme/createTheme";
 import { showToast } from "./utils";
 
+/**
+ * Root application component that sets up the app's theme, layout, and global state.
+ * Handles user data initialization and updates, theme management, and global error handling.
+ * 
+ * @returns {JSX.Element} The root application component
+ */
 function App() {
   const { user, setUser } = useContext(UserContext);
   const systemTheme = useSystemTheme();
 
-  // Initialize user properties if they are undefined
-  // this allows to add new properties to the user object without error
+  /**
+   * Updates nested properties in the user object to ensure compatibility with new features.
+   * Preserves existing user preferences while adding any new default properties.
+   * 
+   * @param userObject - The current user object
+   * @param defaultObject - The default user object containing all expected properties
+   * @returns The updated user object
+   */
   const updateNestedProperties = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (userObject: any, defaultObject: any) => {
@@ -75,6 +99,10 @@ function App() {
     [user.colorList],
   );
 
+  /**
+   * Effect hook to handle user data initialization and updates.
+   * Ensures all required user properties are present and up-to-date.
+   */
   useEffect(() => {
     setUser((prevUser) => {
       const updatedUser = updateNestedProperties({ ...prevUser }, defaultUser);
@@ -121,6 +149,12 @@ function App() {
     }
   }, [user.settings.appBadge, user.tasks]);
 
+  /**
+   * Initializes the application theme based on user preferences or system theme.
+   * Creates and applies the appropriate theme using Material-UI and Emotion.
+   * 
+   * @returns {Theme} The configured Material-UI theme
+   */
   const getMuiTheme = useCallback((): Theme => {
     if (systemTheme === "unknown") {
       return Themes[0].MuiTheme;
@@ -139,32 +173,37 @@ function App() {
     }
   }, [user.theme, getMuiTheme]);
 
+  /**
+   * Creates the custom theme based on the user's preferences and system theme.
+   * 
+   * @returns {Theme} The custom theme
+   */
+  const theme: Theme = createCustomTheme(
+    getMuiTheme().palette.primary.main,
+    getMuiTheme().palette.secondary.main,
+    isDarkMode(user.darkmode, systemTheme, getMuiTheme().palette.secondary.main)
+      ? "dark"
+      : "light",
+  );
+
   return (
-    <MuiThemeProvider
-      theme={createCustomTheme(
-        getMuiTheme().palette.primary.main,
-        getMuiTheme().palette.secondary.main,
-        isDarkMode(user.darkmode, systemTheme, getMuiTheme().palette.secondary.main)
-          ? "dark"
-          : "light",
-      )}
-    >
-      <EmotionThemeProvider
-        theme={{
-          primary: getMuiTheme().palette.primary.main,
-          secondary: getMuiTheme().palette.secondary.main,
-          darkmode: isDarkMode(user.darkmode, systemTheme, getMuiTheme().palette.secondary.main),
-        }}
-      >
-        <GlobalStyles />
-        <CustomToaster />
-        <ErrorBoundary>
+    <ErrorBoundary>
+      <MuiThemeProvider theme={theme}>
+        <EmotionThemeProvider
+          theme={{
+            primary: getMuiTheme().palette.primary.main,
+            secondary: getMuiTheme().palette.secondary.main,
+            darkmode: isDarkMode(user.darkmode, systemTheme, getMuiTheme().palette.secondary.main),
+          }}
+        >
+          <GlobalStyles />
+          <CustomToaster />
           <MainLayout>
             <AppRouter />
           </MainLayout>
-        </ErrorBoundary>
-      </EmotionThemeProvider>
-    </MuiThemeProvider>
+        </EmotionThemeProvider>
+      </MuiThemeProvider>
+    </ErrorBoundary>
   );
 }
 
