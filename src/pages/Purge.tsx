@@ -23,6 +23,7 @@ import { Task, UUID } from "../types/user";
 import { useStorageState } from "../hooks/useStorageState";
 import { DeleteForeverRounded, DeleteSweepRounded, DoneAllRounded } from "@mui/icons-material";
 import { showToast } from "../utils";
+import { APP_NAME } from "../constants";
 
 const Purge = () => {
   const { user, setUser } = useContext(UserContext);
@@ -37,7 +38,7 @@ const Purge = () => {
   const [deleteAllDialog, setDeleteAllDialog] = useState<boolean>(false);
 
   useEffect(() => {
-    document.title = "Todo App - Purge tasks";
+    document.title = `${APP_NAME} - Purge tasks`;
   }, []);
 
   const doneTasks = tasks.filter((task) => task.done);
