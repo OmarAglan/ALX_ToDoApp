@@ -12,6 +12,7 @@ import { useTheme } from "@emotion/react";
 import { generateUUID, getFontColor, isDark, showToast } from "../utils";
 import { ColorPalette } from "../theme/themeConfig";
 import InputThemeProvider from "../contexts/InputThemeProvider";
+import { APP_NAME } from "../constants";
 
 const AddTask = () => {
   const { user, setUser } = useContext(UserContext);
@@ -38,7 +39,7 @@ const AddTask = () => {
   const n = useNavigate();
 
   useEffect(() => {
-    document.title = "Todo App - Add Task";
+    document.title = `${APP_NAME} - Add Task`;
   }, []);
 
   useEffect(() => {

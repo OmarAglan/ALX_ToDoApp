@@ -13,7 +13,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { CATEGORY_NAME_MAX_LENGTH } from "../constants";
+import { CATEGORY_NAME_MAX_LENGTH, APP_NAME } from "../constants";
 import { UserContext } from "../contexts/UserContext";
 import { useStorageState } from "../hooks/useStorageState";
 import {
@@ -55,7 +55,7 @@ const Categories = () => {
   const n = useNavigate();
 
   useEffect(() => {
-    document.title = "Todo App - Categories";
+    document.title = `${APP_NAME} - Categories`;
     if (!user.settings.enableCategories) {
       n("/");
     }

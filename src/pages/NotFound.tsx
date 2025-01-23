@@ -10,11 +10,13 @@ interface NotFoundProps {
   message?: string | ReactNode;
 }
 
+const APP_NAME = "Todo App";
+
 const NotFound: React.FC<NotFoundProps> = ({ message }) => {
   const n = useNavigate();
 
   useEffect(() => {
-    document.title = "Todo App - Page Not Found";
+    document.title = `${APP_NAME} - Page Not Found`;
   }, []);
 
   return (

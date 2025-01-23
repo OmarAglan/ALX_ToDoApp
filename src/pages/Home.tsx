@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Home page component that displays the main task dashboard.
+ * Features include task statistics, greeting messages, and the main task list.
+ */
+
 import { useState, useEffect, ReactNode, useContext, useMemo, lazy, Suspense } from "react";
 import {
   AddButton,
@@ -23,10 +28,25 @@ import { useResponsiveDisplay } from "../hooks/useResponsiveDisplay";
 import { useNavigate } from "react-router-dom";
 import { TaskProvider } from "../contexts/TaskProvider";
 
+// Lazy load the TasksList component to improve initial page load performance
 const TasksList = lazy(() =>
   import("../components/tasks/TasksList").then((module) => ({ default: module.TasksList })),
 );
 
+/**
+ * Home page component that serves as the main dashboard for the todo application.
+ * Displays user greeting, task completion statistics, and the list of tasks.
+ * 
+ * Features:
+ * - Dynamic greeting message with emoji support
+ * - Task completion progress indicator
+ * - Tasks due today counter
+ * - Responsive design for mobile and desktop
+ * - Offline mode support
+ * - Add task button
+ * 
+ * @returns {JSX.Element} The home page component
+ */
 const Home = () => {
   const { user } = useContext(UserContext);
   const { tasks, emojisStyle, settings, name } = user;
@@ -37,6 +57,9 @@ const Home = () => {
   const [tasksWithDeadlineTodayCount, setTasksWithDeadlineTodayCount] = useState<number>(0);
   const [tasksDueTodayNames, setTasksDueTodayNames] = useState<string[]>([]);
 
+  /**
+   * Calculate the percentage of completed tasks
+   */
   const completedTaskPercentage = useMemo<number>(
     () => (completedTasksCount / tasks.length) * 100,
     [completedTasksCount, tasks.length],
@@ -46,9 +69,12 @@ const Home = () => {
   const n = useNavigate();
   const isMobile = useResponsiveDisplay();
 
+  /**
+   * Initialize the page with a random greeting and set the document title
+   */
   useEffect(() => {
     setRandomGreeting(getRandomGreeting());
-    document.title = "Todo App";
+    document.title = "ToDoY";
 
     const interval = setInterval(() => {
       setRandomGreeting(getRandomGreeting());
@@ -58,6 +84,9 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  /**
+   * Update task statistics whenever tasks change
+   */
   useEffect(() => {
     const completedCount = tasks.filter((task) => task.done).length;
     setCompletedTasksCount(completedCount);
@@ -79,6 +108,12 @@ const Home = () => {
     setTasksDueTodayNames(taskNamesDueToday);
   }, [tasks]);
 
+  /**
+   * Replace emoji codes in a given text with Emoji components
+   * 
+   * @param {string} text The text to replace emoji codes in
+   * @returns {ReactNode[]} An array of React nodes with emoji codes replaced
+   */
   const replaceEmojiCodes = (text: string): ReactNode[] => {
     const emojiRegex = /\*\*(.*?)\*\*/g;
     const parts = text.split(emojiRegex);
@@ -95,6 +130,12 @@ const Home = () => {
     });
   };
 
+  /**
+   * Render a greeting message with emoji support
+   * 
+   * @param {string | ReactNode} text The greeting message to render
+   * @returns {ReactNode} The rendered greeting message
+   */
   const renderGreetingWithEmojis = (text: string | ReactNode) => {
     if (typeof text === "string") {
       return replaceEmojiCodes(text);
@@ -104,7 +145,11 @@ const Home = () => {
     }
   };
 
-  // Returns a greeting based on the current time.
+  /**
+   * Returns a greeting based on the current time.
+   * 
+   * @returns {string} The greeting message
+   */
   const displayGreeting = (): string => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
@@ -120,7 +165,12 @@ const Home = () => {
     return greeting;
   };
 
-  // Returns a task completion message based on the completion percentage.
+  /**
+   * Returns a task completion message based on the completion percentage.
+   * 
+   * @param {number} completionPercentage The completion percentage
+   * @returns {string} The task completion message
+   */
   const getTaskCompletionText = (completionPercentage: number): string => {
     switch (true) {
       case completionPercentage === 0:
