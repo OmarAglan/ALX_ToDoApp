@@ -21,7 +21,7 @@ import {
   Settings,
   TodayRounded,
 } from "@mui/icons-material";
-import { PROFILE_PICTURE_MAX_LENGTH, USER_NAME_MAX_LENGTH } from "../constants";
+import { PROFILE_PICTURE_MAX_LENGTH, USER_NAME_MAX_LENGTH, APP_NAME } from "../constants";
 import { CustomDialogTitle, LogoutDialog, SettingsDialog, TopBar } from "../components";
 import { DialogBtn, UserAvatar } from "../styles";
 import { UserContext } from "../contexts/UserContext";
@@ -38,7 +38,7 @@ const UserProfile = () => {
   const [openSettings, setOpenSettings] = useState<boolean>(false);
 
   useEffect(() => {
-    document.title = `Todo App - User ${name ? `(${name})` : ""}`;
+    document.title = `${APP_NAME} - User ${name ? `(${name})` : ""}`;
   }, [name]);
 
   const handleSaveName = () => {
