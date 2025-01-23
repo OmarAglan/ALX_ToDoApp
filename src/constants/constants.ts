@@ -1,4 +1,10 @@
 /**
+ * Application name and branding
+ */
+export const APP_NAME = "ALX TaskMaster";
+export const APP_CREATOR = "github.com/OmarAglan";
+
+/**
  * Maximum length allowed for task names.
  */
 export const TASK_NAME_MAX_LENGTH = 40;
