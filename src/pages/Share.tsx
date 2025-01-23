@@ -34,7 +34,7 @@ import {
   LinkOff,
   PushPinRounded,
 } from "@mui/icons-material";
-import { URL_REGEX, USER_NAME_MAX_LENGTH } from "../constants";
+import { URL_REGEX, USER_NAME_MAX_LENGTH, APP_NAME } from "../constants";
 import { CategoryBadge, CustomDialogTitle } from "../components";
 import Home from "./Home";
 import LZString from "lz-string";
@@ -104,7 +104,7 @@ const SharePage = () => {
   }, [taskParam, userNameParam]);
 
   useEffect(() => {
-    document.title = `Todo App - Recieved Task ${taskData ? "(" + taskData.name + ")" : ""}`;
+    document.title = `${APP_NAME} - Received Task ${taskData ? "(" + taskData.name + ")" : ""}`;
   }, [taskData]);
 
   const handleAddTask = () => {

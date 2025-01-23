@@ -8,6 +8,7 @@ import { Emoji } from "emoji-picker-react";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { getColorName } from "ntc-ts";
+import { APP_NAME } from "../constants"; // Assuming APP_NAME is defined in this file
 
 const TaskDetails = () => {
   const { user } = useContext(UserContext);
@@ -17,7 +18,7 @@ const TaskDetails = () => {
   const task = tasks.find((task) => task.id.toString().replace(".", "") === formattedId);
 
   useEffect(() => {
-    document.title = `Todo App - ${task?.name || "Task Details"}`;
+    document.title = `${APP_NAME} - ${task?.name || "Task Details"}`;
   }, [task?.name]);
 
   if (!task) {
