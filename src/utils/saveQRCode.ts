@@ -33,14 +33,15 @@ export const saveQRCode = (taskName: string) => {
     ctx.drawImage(img, qrCodeX, qrCodeY);
     // Draw task name
     ctx.font = "bold 20px Poppins";
-    const textWidth = ctx.measureText(taskName).width;
+    const text1 = "Share Task";
+    const textWidth = ctx.measureText(text1).width;
     const centerX = (canvasWidth - textWidth) / 2;
-    const bottomY = canvasHeight - 35;
+    const bottomY = canvasHeight - 55;
 
     ctx.fillStyle = "black";
-    ctx.fillText(taskName, centerX, bottomY);
+    ctx.fillText(text1, centerX, bottomY);
     // Draw attribution text
-    const text2 = "Todo App by github.com/maciekt07";
+    const text2 = `${APP_NAME} by ${APP_CREATOR}`;
     ctx.font = "14px Poppins";
     const text2Width = ctx.measureText(text2).width;
     const text2X = (canvasWidth - text2Width) / 2;
